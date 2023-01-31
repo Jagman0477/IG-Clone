@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/css/styles.css" type="text/css"> -->
+    <link rel="stylesheet" href="../public/css/styles.css" type="text/css">
+            
+</head>
+<body style="background-color: #f2f2f2;">
+    <form action="/testing" name="signUp_InForm" method="POST" onsubmit="return formCheck()" enctype="multipart/form-data">
+    <div class="signInPage">
+        <input type="file" accept="image/*" name="avatar" id="avatar" placeholder="Profile Image" style="display: none;">
+        <div class="holder">
+            <img id="profileImgHolder" src="https://media.istockphoto.com/id/1164822188/vector/male-avatar-profile-picture.jpg?s=612x612&w=0&k=20&c=KPsLgVIwEGdDvf4_kiynCXw96p_PhBjIGdU68qkpbuI=" alt="Profile Image" onclick="$('#avatar').click()">
+        </div>
+        
+
+        <div class="signInForm">
+            <h1 class="display-1 IGfont" style="margin-bottom: 10%;">Instagram</h1>
+
+                    <input type="text" class="form-control" name="firstName" id="profileFName" placeholder="First Name" style="margin-bottom: 3%;" required>
+                    <input type="text" class="form-control" name="lastName" id="profileLName" placeholder="Last Name" style="margin-bottom: 3%;" required>
+                    <input type="email" class="form-control" name="email" id="profileEmail" placeholder="Email ID" style="margin-bottom: 3%;" required>
+                    <input type="date" class="form-control" name="dob" id="profileDOB" placeholder="Date of Birth" style="margin-bottom: 10%;" required>
+                    <input type="submit" value="Create Profile" id="submitButton" class="btn btn-primary btn-lg btn-block">     
+        </div>
+    </div>
+    </form>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    function formCheck(){
+        let firstName = document.getElementById("profileFName").value;
+        let lastName = document.getElementById("profileLName").value;
+        let email = document.getElementById("profileEmail").value;
+        let dob = document.getElementById("profileDOB").value;
+        if(firstName == '' || lastName == '' || email == '' || dob == ''){
+            alert("Invalid Values! Reneter data.");
+        }
+        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+        } else {
+            alert("Insert a valid Email ID");
+            document.getElementById("profileEmail").focus();
+            return false;
+        }
+        return true;
+    }
+    function fasterPreview( uploader ) {
+        if ( uploader.files && uploader.files[0] ){
+            $('#profileImgHolder').attr('src', 
+                window.URL.createObjectURL(uploader.files[0]) );
+        }
+    }
+    $('#avatar').change(function(){
+        fasterPreview(this);
+    })
+</script>
+</html>

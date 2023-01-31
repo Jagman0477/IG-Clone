@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Vibur&display=swap');
+
+/* SignIn and SignUp Page */
+.logoImg{
+    height: 100vh;
+    width: auto;
+}
+
+.signInForm{
+    margin: 10% 0%;
+    background-color: white;
+    height: 50vh;
+    width: 20%;
+    padding: 20px;
+    text-align: center;
+    border: groove 1px white;
+}
+
+.signInPage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+}
+
+.IGfont{
+    font-family: 'Vibur', cursive;
+}
+
+#submitButton{
+    padding: 3px; 
+    font-size: medium; 
+    background-color: #46a5e0; 
+    border: #46a5e0;
+}
+
+#submitButton:hover{
+    background-color: #2d9ade;
+    border: #2d9ade;
+}
+
+/* Profile page */
+
+#profileImgHolder{
+    height: 30vh;
+    width: 30vh;
+    border-radius: 50%;
+    border: solid 1px grey;
+}
+
+#profileImgHolder:hover{
+    border-color: black;
+}
+
+.holder{
+    width: 30vh;
+    height: 30vh;
+    border-radius: 50%;
+    margin-bottom: 2%;
+    margin-right: 4%;
+}

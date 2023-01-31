@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+            
+    </head>
+    <body>
+
+    <div class="signInPage">
+
+
+        <img src="https://media.voguebusiness.com/photos/60ae33319e6b5e325e60067c/2:3/w_1920,c_limit/instagram-likes-voguebus-instagram-may-21-story.gif" class="rounded logoImg" alt="A Gif is here.">
+        
+        <div class="signInForm">
+            <h1 class="display-1 IGfont">Instagram</h1>
+            <form action="/testing" name="signUp_InForm" method="POST" onsubmit="return formCheck()">
+                
+                    <input type="text" class="form-control" name="username" id="UserName" placeholder="Username" style="margin-bottom: 3%; margin-top: 15%;" required>
+                    <input type="password" class="form-control" name="password" id="Password" placeholder="Password" style="margin-bottom: 5%" required>
+                    <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" id="submitButton">
+                    
+            </form>
+            <div style="margin-top: 3%; margin-bottom: 7%;"><hr style="width: 40%; float: left; border: 1px #bababa solid;"><div style="text-align: center; display: inline-block; margin-top: 5%; color: grey;"> OR </div> <hr style="width: 40%; float: right; border: 1px solid #bababa;"></div>
+            <span style="margin-top: 5px;">Don't have an account? <a href="/signUp">Sign Up</a></span>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    function formCheck(){
+        let username = document.querySelector("#UserName").value;
+        let password = document.querySelector("#Password").value;
+        if(password == '' || username == ''){
+            alert("Enter valid values.");
+            return false;
+        }
+        if(username.length<5 || username.length>28){
+            alert("Username should be greater than 5 and less than 28 in length.");
+            document.querySelector("#UserName").focus();
+            return false;
+        }
+        if(/\s/.test(username)){
+            alert("User Name shouldn't contain spaces.");
+            document.querySelector("#UserName").focus();
+            return false;
+        }
+        if(password.length<8 || password.length>28){
+            alert("Password should be greater than 8 and less than 28 in length.");
+            document.querySelector("#Password").focus();
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</html>
