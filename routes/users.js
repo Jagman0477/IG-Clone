@@ -59,6 +59,16 @@ router.post("/dislikeRequest", authController.authorizeUser, (req, res) => {
 
 })
 
+// Follow someone - add follower and following.
+router.post("/follow", authController.authorizeUser, (req, res) => {
+    usersController.follow(req, res);
+})
+
+// Unfollpw someone - remove follower and following.
+router.post("/unFollow", authController.authorizeUser, (req, res) => {
+    usersController.unfollow(req, res);
+})
+
 // Log out user from website.
 router.post("/logout", authController.authorizeUser, (req, res) => {
     

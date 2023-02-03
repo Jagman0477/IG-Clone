@@ -11,7 +11,7 @@ const profileSchema = mongoose.Schema({
     dob: {type: Date, required: true},
     profileCreated: {type: Boolean, required: true},
     avatar: {type: String, required: false},
-    posts: [mongoose.model("posts").schema],
+    posts: [{type: mongoose.model("posts").schema , ref: "posts"}],
     followers: [{type: String, required: false}],
     following: [{type: String, required: false}]
 })

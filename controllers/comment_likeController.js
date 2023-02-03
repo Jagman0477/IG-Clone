@@ -49,7 +49,11 @@ exports.createComment = (req, res) => {
             Posts.updateOne({_id: postid.toString()}, {$push: {comments: newComment}}, (err, updatedPost) => {
                 console.log(updatedPost);
                 if(!err && updatedPost.modifiedCount === 1){
-                    return res.status(200).send("Comment created");
+                    Profiles.updateOne({userName: userName, "posts._id": req.body.postid}, {$push: {"posts.$.comments": newComment}}, (err, updatedUser) => {
+                        if(!err && updatedUser.modifiedCount === 1){
+                            return res.status(200).send("Comment created");
+                        } else console.log(err);
+                    })                    
                 } else {
                     console.log(err);
                     Comments.deleteOne({createdBy: newComment.createdBy, createdOn: newComment.createdOn, postid: newComment.postid}, (err));
@@ -73,15 +77,19 @@ exports.likingPost = (req, res) => {
         if(!err && foundPost.likes.includes(userName)){
             return res.send("Already Liked");
         } else if(!err && !foundPost.likes.includes(userName)){
-            Posts.updateOne({_id: postid.toString()}, {$push: {likes: userName}}, (err, updatedPost) => {
+            Profiles.updateOne({userName: userName, "posts._id": postid.toString()}, {$push: {"posts.$.likes": userName}}, (err, updatedPost) => {
                 if(err){
                     console.log(err);
                     return res.status(500).send("Server error(1).");
                 } else if(!err && updatedPost.modifiedCount === 1){
-                    return res.status(200).send("Post liked");
+                    Posts.updateOne({_id: postid.toString()}, {$push: {likes: userName}}, (err, updatedPost) => {
+                        if(!err && updatedPost.modifiedCount === 1){
+                            return res.status(200).send("Post liked");
+                        } else console.log(err);
+                    })                    
                 }
             })
-        }
+        } else console.log(err);
     })
 }
 
@@ -98,12 +106,16 @@ exports.dislikingPost = (req, res) => {
         if(!err && !foundPost.likes.includes(userName)){
             return res.send("You didn't even like it. ;( ");
         } else if(!err && foundPost.likes.includes(userName)){
-            Posts.updateOne({_id: postid.toString()}, {$pull: {likes: userName}}, (err, updatedPost) => {
+            Profiles.updateOne({userName: userName, "posts._id": postid.toString()}, {$pull: {"posts.$.likes": userName}}, (err, updatedUser) => {
                 if(err){
                     console.log(err);
                     return res.status(500).send("Server error(1).");
-                } else if(!err && updatedPost.modifiedCount === 1){
-                    return res.status(200).send("Post disliked");
+                } else if(!err && updatedUser.modifiedCount === 1){
+                    Posts.updateOne({_id: postid.toString()}, {$pull: {likes: userName}}, (err, updatedPost) => {
+                        if(!err && updatedPost.modifiedCount === 1){
+                            return res.status(200).send("Post disliked");
+                        } else console.log(err);
+                    })   
                 }
             })
         }

@@ -280,9 +280,44 @@ exports.showProfile = (req, res) => {
 }
 
 exports.follow = (req, res) => {
+    let otherUser = req.body.profileUserName
+    
+    // Extracting username from jwt token.
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    let userName = authController.decodeToken(token).user;
 
+    Profiles.updateOne({userName: otherUser}, {$push: {followers: userName}}, (err, updatedUser)=>{
+        if(!err && updatedUser.modifiedCount===1){
+            console.log("Follower added to " + otherUser);
+            Profiles.updateOne({userName: userName}, {$push: {following: otherUser}}, (err, updatedUser2)=>{
+                if(!err && updatedUser2.modifiedCount===1){
+                    console.log("Following added to " + userName);
+                    return res.status(200).send("Followed someone.");
+                } console.log("failed on adding following - "+err);
+            })
+        } else console.log("failed on adding follower - "+err);
+    })
 }
 
 exports.unfollow = (req, res) => {
+    let otherUser = req.body.profileUserName
     
+    // Extracting username from jwt token.
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    let userName = authController.decodeToken(token).user;
+
+    Profiles.updateOne({userName: otherUser}, {$pull: {followers: userName}}, (err, updatedUser)=>{
+        if(!err && updatedUser.modifiedCount===1){
+            console.log("Follower removed from " + otherUser);
+            Profiles.updateOne({userName: userName}, {$pull: {following: otherUser}}, (err, updatedUser2)=>{
+                if(!err && updatedUser2.modifiedCount===1){
+                    console.log("Following removed from " + userName);
+                    return res.status(200).send("Unfollowed someone.");
+                } console.log("failed on remove following - "+err);
+            })
+        } else console.log("failed on remove follower - "+err);
+    })
+
 }
